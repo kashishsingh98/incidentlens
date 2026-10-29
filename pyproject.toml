@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "incidentlens"
+version = "0.1.0"
+description = "An evidence-first production incident investigation lab powered by MCP"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+  "mcp==1.30.0", "fastapi==0.162.0", "uvicorn==0.54.0",
+  "httpx==0.28.1", "openai==2.54.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2", "pytest-asyncio==0.26.0", "ruff==0.17.3"]
+
+[project.scripts]
+incidentlens = "incidentlens.cli:main"
+incidentlens-mcp = "incidentlens.mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["incidentlens"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]

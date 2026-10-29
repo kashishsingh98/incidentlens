@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>IncidentLens · Evidence before answers</title>
+  <link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="/"><span class="brandmark">◉</span> IncidentLens<span class="beta">LAB / 01</span></a><span class="connection"><i></i> MCP connected on investigation</span></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">OBSERVE → INVESTIGATE → VERIFY</p><h1>Evidence before answers.</h1><p class="subtitle">Break a real query. Follow the evidence through MCP.<br>Find a likely cause, then measure the recovery.</p></div><div class="local"><span class="dot"></span> LOCAL SANDBOX<br><small>orders-api / SQLite / read-only MCP</small></div></section>
+    <section class="workflow" aria-label="Lab controls">
+      <div class="step"><span class="stepno">01</span><div><h2>Establish baseline</h2><p>150k orders · indexed query</p></div><button id="baseline">Run baseline</button></div>
+      <div class="step"><span class="stepno">02</span><div><h2>Introduce a failure</h2><p>Deploy an index-removal migration</p></div><button id="incident" disabled>Remove index</button></div>
+      <div class="step"><span class="stepno">03</span><div><h2>Verify remediation</h2><p>Explicitly restore the lab index</p></div><button id="recover" disabled>Restore &amp; verify</button></div>
+    </section>
+    <div id="notice" class="notice" role="status" aria-live="polite">Start a baseline to create your first experiment. No API key required.</div>
+    <section class="metrics" aria-label="Measured performance">
+      <article><span class="metric-label">BASELINE QUERY P95</span><strong id="baselineMetric">—</strong><small>30 sequential queries</small></article>
+      <article><span class="metric-label">INCIDENT QUERY P95</span><strong id="incidentMetric">—</strong><small>Measured, never simulated</small></article>
+      <article><span class="metric-label">SLOWDOWN</span><strong id="ratioMetric">—</strong><small>Incident ÷ baseline p95</small></article>
+      <article><span class="metric-label">RECOVERY QUERY P95</span><strong id="recoveryMetric">—</strong><small>Fresh samples after restoration</small></article>
+    </section>
+    <div class="columns">
+      <section class="panel telemetry"><div class="panelhead"><h2>Query latency</h2><span class="tag">LIVE MEASUREMENTS</span></div><p class="caption">Each point is a real query · milliseconds · request order</p><div id="chart" aria-label="Query latency chart"><p class="empty">Your experiment will appear here.</p></div><div class="legend"><span class="green">● Baseline</span><span class="orange">● Incident</span><span class="blue">● Recovery</span></div><div class="timelinehead">DEPLOYMENT TIMELINE</div><div id="timeline" class="timeline"><p class="empty">No deployments recorded.</p></div></section>
+      <section class="panel investigation"><div class="panelhead"><h2>Investigation</h2><span class="tag">VIA MCP / STDIO</span></div><p class="caption">Trace the tool calls. Inspect the supporting evidence.</p><div class="investigatebar"><label for="mode" class="sr-only">Investigation mode</label><select id="mode"><option value="rules">Rule-based · no API key</option><option value="llm" disabled>LLM agent · key required</option></select><button id="investigate" class="primary" disabled>Investigate ↗</button></div><div id="report"><div class="reportempty"><span>⌕</span><h3>A conclusion should earn your trust.</h3><p>Run an investigation to see findings with evidence references, limitations, and next steps.</p></div></div></section>
+    </div>
+    <section class="panel tracepanel"><div class="panelhead"><h2>MCP tool trace</h2><button id="download" class="quiet" disabled>Download report ↓</button></div><p class="caption">Real protocol calls to an isolated MCP server process. Expand a call to inspect the JSON.</p><div id="trace"><p class="empty">No tool calls yet.</p></div></section>
+    <footer><span>IncidentLens / reproducible incident engineering</span><span>Local query timings ≠ production HTTP latency. No automatic remediation.</span></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,1313 @@
+{
+  "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f",
+  "mode": "rules",
+  "report": {
+    "status": "recovered",
+    "title": "Recovery observed after index restoration",
+    "findings": [
+      {
+        "statement": "Query p95 changed from 0.009 ms to 5.574 ms (597.1×).",
+        "evidence": [
+          "E1"
+        ]
+      },
+      {
+        "statement": "An index removal preceded the slowdown; the incident plan scans orders.",
+        "evidence": [
+          "E2",
+          "E3"
+        ]
+      },
+      {
+        "statement": "After index restoration, query p95 fell to 0.006 ms.",
+        "evidence": [
+          "E1",
+          "E2"
+        ]
+      }
+    ],
+    "next_steps": [
+      "Review write overhead and repeat under representative concurrent load."
+    ],
+    "limitations": [
+      "Single-process SQLite query benchmark; timings vary by machine and cache.",
+      "A lab hypothesis is not proof of a production root cause.",
+      "p95 uses 30 sequential samples per phase; it is not a production SLO estimate."
+    ]
+  },
+  "trace": [
+    {
+      "id": "E1",
+      "tool": "query_metrics",
+      "arguments": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f"
+      },
+      "attempts": 1,
+      "ok": true,
+      "result": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f",
+        "phases": {
+          "baseline": {
+            "samples": 30,
+            "p95_ms": 0.009334,
+            "mean_ms": 0.007926,
+            "first_event": 2,
+            "last_event": 31
+          },
+          "incident": {
+            "samples": 30,
+            "p95_ms": 5.573655,
+            "mean_ms": 4.122419,
+            "first_event": 33,
+            "last_event": 62
+          },
+          "recovery": {
+            "samples": 30,
+            "p95_ms": 0.00636,
+            "mean_ms": 0.004988,
+            "first_event": 65,
+            "last_event": 94
+          }
+        },
+        "points": [
+          {
+            "event_id": 2,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005929,
+            "customer_id": 0,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 3,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.00651,
+            "customer_id": 1,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 4,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005108,
+            "customer_id": 2,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 5,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005118,
+            "customer_id": 3,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 6,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005098,
+            "customer_id": 4,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 7,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004958,
+            "customer_id": 5,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 8,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004647,
+            "customer_id": 6,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 9,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004807,
+            "customer_id": 7,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 10,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005138,
+            "customer_id": 8,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 11,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004877,
+            "customer_id": 9,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 12,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.008282,
+            "customer_id": 10,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 13,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.080109,
+            "customer_id": 11,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 14,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005579,
+            "customer_id": 12,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 15,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005157,
+            "customer_id": 13,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 16,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005268,
+            "customer_id": 14,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 17,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.009334,
+            "customer_id": 15,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 18,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005358,
+            "customer_id": 16,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 19,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005228,
+            "customer_id": 17,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 20,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004767,
+            "customer_id": 18,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 21,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005518,
+            "customer_id": 19,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 22,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005038,
+            "customer_id": 20,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 23,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004978,
+            "customer_id": 21,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 24,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004747,
+            "customer_id": 22,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 25,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004978,
+            "customer_id": 23,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 26,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004778,
+            "customer_id": 24,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 27,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004507,
+            "customer_id": 25,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 28,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004617,
+            "customer_id": 26,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 29,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.004577,
+            "customer_id": 27,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 30,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.007411,
+            "customer_id": 28,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 31,
+            "timestamp": "2026-10-29T14:38:54.797+00:00",
+            "kind": "request",
+            "phase": "baseline",
+            "duration_ms": 0.005358,
+            "customer_id": 29,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 33,
+            "timestamp": "2026-10-29T14:38:55.878+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.471339,
+            "customer_id": 0,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 34,
+            "timestamp": "2026-10-29T14:38:55.883+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.177022,
+            "customer_id": 1,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 35,
+            "timestamp": "2026-10-29T14:38:55.887+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.185174,
+            "customer_id": 2,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 36,
+            "timestamp": "2026-10-29T14:38:55.891+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.249819,
+            "customer_id": 3,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 37,
+            "timestamp": "2026-10-29T14:38:55.895+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.774264,
+            "customer_id": 4,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 38,
+            "timestamp": "2026-10-29T14:38:55.899+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.827984,
+            "customer_id": 5,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 39,
+            "timestamp": "2026-10-29T14:38:55.903+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.666544,
+            "customer_id": 6,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 40,
+            "timestamp": "2026-10-29T14:38:55.906+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.676078,
+            "customer_id": 7,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 41,
+            "timestamp": "2026-10-29T14:38:55.910+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.66981,
+            "customer_id": 8,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 42,
+            "timestamp": "2026-10-29T14:38:55.914+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.656719,
+            "customer_id": 9,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 43,
+            "timestamp": "2026-10-29T14:38:55.918+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.955934,
+            "customer_id": 10,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 44,
+            "timestamp": "2026-10-29T14:38:55.922+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.264642,
+            "customer_id": 11,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 45,
+            "timestamp": "2026-10-29T14:38:55.926+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.96,
+            "customer_id": 12,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 46,
+            "timestamp": "2026-10-29T14:38:55.930+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.007991,
+            "customer_id": 13,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 47,
+            "timestamp": "2026-10-29T14:38:55.934+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.075481,
+            "customer_id": 14,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 48,
+            "timestamp": "2026-10-29T14:38:55.939+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.451049,
+            "customer_id": 15,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 49,
+            "timestamp": "2026-10-29T14:38:55.942+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.836557,
+            "customer_id": 16,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 50,
+            "timestamp": "2026-10-29T14:38:55.946+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.8927,
+            "customer_id": 17,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 51,
+            "timestamp": "2026-10-29T14:38:55.950+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.719973,
+            "customer_id": 18,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 52,
+            "timestamp": "2026-10-29T14:38:55.954+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.713604,
+            "customer_id": 19,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 53,
+            "timestamp": "2026-10-29T14:38:55.958+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.942043,
+            "customer_id": 20,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 54,
+            "timestamp": "2026-10-29T14:38:55.962+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.091074,
+            "customer_id": 21,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 55,
+            "timestamp": "2026-10-29T14:38:55.968+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 5.573655,
+            "customer_id": 22,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 56,
+            "timestamp": "2026-10-29T14:38:55.971+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 3.909404,
+            "customer_id": 23,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 57,
+            "timestamp": "2026-10-29T14:38:55.976+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.143983,
+            "customer_id": 24,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 58,
+            "timestamp": "2026-10-29T14:38:55.980+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.145946,
+            "customer_id": 25,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 59,
+            "timestamp": "2026-10-29T14:38:55.984+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.400944,
+            "customer_id": 26,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 60,
+            "timestamp": "2026-10-29T14:38:55.990+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 5.756737,
+            "customer_id": 27,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 61,
+            "timestamp": "2026-10-29T14:38:55.995+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.4717,
+            "customer_id": 28,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 62,
+            "timestamp": "2026-10-29T14:38:55.999+00:00",
+            "kind": "request",
+            "phase": "incident",
+            "duration_ms": 4.004395,
+            "customer_id": 29,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 65,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005278,
+            "customer_id": 0,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 66,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.00636,
+            "customer_id": 1,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 67,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004887,
+            "customer_id": 2,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 68,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004937,
+            "customer_id": 3,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 69,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004587,
+            "customer_id": 4,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 70,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004817,
+            "customer_id": 5,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 71,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004838,
+            "customer_id": 6,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 72,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005208,
+            "customer_id": 7,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 73,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004937,
+            "customer_id": 8,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 74,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004607,
+            "customer_id": 9,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 75,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004647,
+            "customer_id": 10,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 76,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004556,
+            "customer_id": 11,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 77,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004817,
+            "customer_id": 12,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 78,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005648,
+            "customer_id": 13,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 79,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005368,
+            "customer_id": 14,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 80,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.00672,
+            "customer_id": 15,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 81,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004837,
+            "customer_id": 16,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 82,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004867,
+            "customer_id": 17,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 83,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004686,
+            "customer_id": 18,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 84,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004627,
+            "customer_id": 19,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 85,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004597,
+            "customer_id": 20,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 86,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004667,
+            "customer_id": 21,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 87,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004707,
+            "customer_id": 22,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 88,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004567,
+            "customer_id": 23,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 89,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004587,
+            "customer_id": 24,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 90,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004677,
+            "customer_id": 25,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 91,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004647,
+            "customer_id": 26,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 92,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004797,
+            "customer_id": 27,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 93,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005898,
+            "customer_id": 28,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 94,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005258,
+            "customer_id": 29,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          }
+        ]
+      },
+      "duration_ms": 3.27
+    },
+    {
+      "id": "E2",
+      "tool": "list_deployments",
+      "arguments": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f"
+      },
+      "attempts": 1,
+      "ok": true,
+      "result": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f",
+        "deployments": [
+          {
+            "event_id": 1,
+            "timestamp": "2026-10-29T14:38:54.796+00:00",
+            "kind": "deployment",
+            "version": "v1.0",
+            "action": "baseline",
+            "change": "Customer index present",
+            "sql": "CREATE INDEX idx_orders_customer ON orders(customer_id)"
+          },
+          {
+            "event_id": 32,
+            "timestamp": "2026-10-29T14:38:55.862+00:00",
+            "kind": "deployment",
+            "version": "v1.1",
+            "action": "incident",
+            "change": "Remove customer index",
+            "sql": "DROP INDEX idx_orders_customer"
+          },
+          {
+            "event_id": 64,
+            "timestamp": "2026-10-29T14:38:57.339+00:00",
+            "kind": "deployment",
+            "version": "v1.2",
+            "action": "recovery",
+            "change": "Restore customer index",
+            "sql": "CREATE INDEX idx_orders_customer ON orders(customer_id)"
+          }
+        ]
+      },
+      "duration_ms": 1.34
+    },
+    {
+      "id": "E3",
+      "tool": "inspect_query_plan",
+      "arguments": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f"
+      },
+      "attempts": 1,
+      "ok": true,
+      "result": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f",
+        "plans": [
+          {
+            "event_id": 63,
+            "timestamp": "2026-10-29T14:38:55.999+00:00",
+            "kind": "query_plan",
+            "phase": "incident",
+            "query": "SELECT count(*), sum(total) FROM orders WHERE customer_id = ?",
+            "plan": [
+              "SCAN orders"
+            ]
+          },
+          {
+            "event_id": 95,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "query_plan",
+            "phase": "recovery",
+            "query": "SELECT count(*), sum(total) FROM orders WHERE customer_id = ?",
+            "plan": [
+              "SEARCH orders USING INDEX idx_orders_customer (customer_id=?)"
+            ]
+          }
+        ]
+      },
+      "duration_ms": 1.41
+    },
+    {
+      "id": "E4",
+      "tool": "search_logs",
+      "arguments": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f"
+      },
+      "attempts": 1,
+      "ok": true,
+      "result": {
+        "experiment_id": "b1589325-ab69-4522-b8e5-b7f569ab648f",
+        "requests": [
+          {
+            "event_id": 83,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004686,
+            "customer_id": 18,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 84,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004627,
+            "customer_id": 19,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 85,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004597,
+            "customer_id": 20,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 86,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004667,
+            "customer_id": 21,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 87,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004707,
+            "customer_id": 22,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 88,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004567,
+            "customer_id": 23,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 89,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004587,
+            "customer_id": 24,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 90,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004677,
+            "customer_id": 25,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 91,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004647,
+            "customer_id": 26,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 92,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.004797,
+            "customer_id": 27,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 93,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005898,
+            "customer_id": 28,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          },
+          {
+            "event_id": 94,
+            "timestamp": "2026-10-29T14:38:57.340+00:00",
+            "kind": "request",
+            "phase": "recovery",
+            "duration_ms": 0.005258,
+            "customer_id": 29,
+            "matched_orders": 15,
+            "status": 200,
+            "service": "orders-api"
+          }
+        ]
+      },
+      "duration_ms": 1.64
+    },
+    {
+      "id": "E5",
+      "tool": "get_runbook",
+      "arguments": {},
+      "attempts": 1,
+      "ok": true,
+      "result": {
+        "service": "orders-api",
+        "steps": [
+          "Compare baseline and incident query p95 within the same experiment.",
+          "Correlate deployment order with latency; timing alone is not proof.",
+          "Inspect the recorded query plan for a table scan versus an index search.",
+          "If a required index was removed, propose restoring it after human approval.",
+          "Verify recovery using fresh samples and check write overhead before production use."
+        ],
+        "limitations": "Local SQLite lab. Query latency is not HTTP latency or a production SLO."
+      },
+      "duration_ms": 0.99
+    }
+  ],
+  "duration_ms": 637,
+  "protocol": "MCP · stdio · official Python SDK v1"
+}
